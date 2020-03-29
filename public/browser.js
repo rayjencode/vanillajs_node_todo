@@ -29,12 +29,17 @@ document.getElementById('create-form').addEventListener('submit', e => {
         .post('/create-item', { text: createField.value })
         .then(response => {
             // Create the HTML for a new item
-            itemList.insertAdjacentHTML(
-                'beforeend',
-                itemTemplate(response.data)
-            );
-            createField.value = '';
-            createField.focus();
+            if (createField.value) {
+                itemList.insertAdjacentHTML(
+                    'beforeend',
+                    itemTemplate(response.data)
+                );
+                createField.value = '';
+                createField.focus();
+            } else {
+                createField.placeholder = 'Required!!';
+                createField.focus();
+            }
         })
         .catch(() => {
             console.log(`Added Successfully`);

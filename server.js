@@ -88,9 +88,11 @@ App.post('/create-item', function(req, res) {
         allowedTags: [],
         allowedAttributes: {}
     });
-    db.collection('items').insertOne({ text: safeText }, (err, info) => {
-        res.json(info.ops[0]);
-    });
+    if (safeText) {
+        db.collection('items').insertOne({ text: safeText }, (err, info) => {
+            res.json(info.ops[0]);
+        });
+    }
 });
 
 App.post('/update-item', (req, res) => {
